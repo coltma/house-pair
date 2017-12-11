@@ -18,7 +18,7 @@ This project aims to help users to find a matched rental house(simplified as hou
   The system is able to notify user through E-mail or social media apps like Facebook once a candidate house is found;
 
 ## 3. High Level Design
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![capstone-high-level-diagram](https://user-images.githubusercontent.com/25625245/33855691-8cd2d150-de7a-11e7-9099-855a69676e37.jpg)
 
 
 1.House Search Service
@@ -44,12 +44,13 @@ This project aims to help users to find a matched rental house(simplified as hou
 ## 4. Detail Design
 
 #### 1.House Search Service
+![capstone-search-diagram](https://user-images.githubusercontent.com/25625245/33855727-b2bb3506-de7a-11e7-8797-3353eecf6678.jpg)
 ###### Java, Spring Boot, Google Map;
 * Fetch house data and predicted prices data(if available) from database, visualize them on web page.
 * Store users' subscription.
 
 #### 2.House Crawler Service
-[img]
+![capstone-crawler-diagram](https://user-images.githubusercontent.com/25625245/33855792-f8542870-de7a-11e7-8841-4900dd73c32f.jpg)
 ###### Python, Scrapy, RabbitMQ, MongoDB;
 * A feeder reads feed into a message queue, then crawlers consume those message by crawling the specific websites.
 * Crawler get the web pages(HTML) and store them into database.
@@ -66,6 +67,7 @@ This project aims to help users to find a matched rental house(simplified as hou
 
 
 #### 3.House Data Process Service
+![capstone-process-diagram](https://user-images.githubusercontent.com/25625245/33855803-fd563c28-de7a-11e7-8f23-32853dafbd36.jpg)
 ###### Java, Spring Boot, RabbitMQ;
 * Consume from the message queue and do validation and de-duplicate before store them into final house data database; Also, if the new data is what the user subscribes, invoke `House Notification Service` through REST API.
 
@@ -78,12 +80,15 @@ This project aims to help users to find a matched rental house(simplified as hou
 * House has a strong location feature and users tend to search houses based on geographic locations, so we can store house data based on locations. If an area has a large number of houses, we can further split into several servers.
 
 #### 4.Machine Learning Service
+![capstone-ml-diagram](https://user-images.githubusercontent.com/25625245/33855799-fb320ab2-de7a-11e7-894f-bef78b5a8abf.jpg)
 ###### Python  
 * Offline: read house data from database and extract features to train a model.
 * Online: when new data comes, use trained to do prediction for house price and store them into predicted database.
 
 
-#### 5.House Notification Service
+#### 5.House Subscription Service
+![capstone-subscription-diagram](https://user-images.githubusercontent.com/25625245/33855804-fea4a8ee-de7a-11e7-9136-88f9a9895dac.jpg)
+
 ###### Node.js, MySQL
 * When received invoke from `House Data Process Service`, send emails to matched users.
 
