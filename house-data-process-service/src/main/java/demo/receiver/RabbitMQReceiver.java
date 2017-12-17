@@ -17,15 +17,15 @@ import java.util.concurrent.CountDownLatch;
 @Component
 public class RabbitMQReceiver {
 
-//    private HouseDataRepository repository;
+    private HouseDataRepository repository;
 
-//    @Autowired
-//    private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-//    @Autowired
-//    public RabbitMQReceiver(HouseDataRepository repository) {
-//        this.repository = repository;
-//    }
+    @Autowired
+    public RabbitMQReceiver(HouseDataRepository repository) {
+        this.repository = repository;
+    }
 
     private CountDownLatch latch = new CountDownLatch(1);
 
@@ -34,18 +34,18 @@ public class RabbitMQReceiver {
         String dataStr = "{}";
         try {
             dataStr = new String(message, "UTF-8");
-//            HouseData data = this.objectMapper.readValue(dataStr, HouseData.class);
-//            this.repository.save(data);
+            HouseData data = this.objectMapper.readValue(dataStr, HouseData.class);
+            this.repository.save(data);
+            System.out.println(" [x] Received <" + data.getId() +  ">");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-//        } catch (JsonParseException e) {
+        } catch (JsonParseException e) {
             e.printStackTrace();
-//        } catch (JsonMappingException e) {
+        } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(" [x] Received <" + dataStr + ">");
         latch.getCount();
     }
 
