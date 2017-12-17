@@ -16,8 +16,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 @RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
-@Document
+@Document(collection = "los_angeles")
 public class HouseData {
+
     @Id
     private String id;
     private long post_id; // craglist_id

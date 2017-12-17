@@ -1,4 +1,4 @@
-package demo.repository;
+package demo.model;
 
 
 import demo.model.HouseData;

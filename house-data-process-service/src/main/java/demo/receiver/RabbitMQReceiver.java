@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.model.HouseData;
-import demo.repository.HouseDataRepository;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import demo.model.HouseDataRepository;
+import demo.service.HouseDataService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,14 +17,14 @@ import java.util.concurrent.CountDownLatch;
 @Component
 public class RabbitMQReceiver {
 
-    private HouseDataRepository repository;
+    private HouseDataService houseDataService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    public RabbitMQReceiver(HouseDataRepository repository) {
-        this.repository = repository;
+    public RabbitMQReceiver(HouseDataService houseDataService) {
+        this.houseDataService = houseDataService;
     }
 
     private CountDownLatch latch = new CountDownLatch(1);
@@ -35,8 +35,8 @@ public class RabbitMQReceiver {
         try {
             dataStr = new String(message, "UTF-8");
             HouseData data = this.objectMapper.readValue(dataStr, HouseData.class);
-            this.repository.save(data);
-            System.out.println(" [x] Received <" + data.getId() +  ">");
+            this.houseDataService.save(data);
+            System.out.println(" [x] Received <" + data.getPost_id() +  ">");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {
