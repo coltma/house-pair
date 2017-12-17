@@ -8,6 +8,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.geo.GeoJson;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -37,10 +40,11 @@ public class HouseData {
     // geo
     // private double latitude;
     // private double longitude;
+    //    GeoJSONPoint location;
     @JsonIgnore
     private final
-    @GeoSpatialIndexed
-    Point location;
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    GeoJsonPoint location;
     private String country;
     private String state;
     private String county;
@@ -51,13 +55,13 @@ public class HouseData {
 
     @SuppressWarnings("unused")
     private HouseData() {
-        this.location = new Point(0, 0);
+        this.location = new GeoJsonPoint(0, 0);
     }
 
     @JsonCreator
     public HouseData(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
         //If specifying latitude and longitude coordinates, list the longitude first and then latitude:
-        this.location = new Point(longitude, latitude);
+        this.location = new GeoJsonPoint(longitude, latitude);
     }
 
     public double getLatitude() {

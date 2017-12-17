@@ -37,6 +37,8 @@ public class RabbitMQReceiver {
             HouseData data = this.objectMapper.readValue(dataStr, HouseData.class);
             this.houseDataService.save(data);
             System.out.println(" [x] Received <" + data.getPost_id() +  ">");
+            System.out.println(" [x] Received <" + data.getLocation().getType() +  ">");
+            System.out.println(" [x] Received <" + data.getLocation().getCoordinates() +  ">");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {
