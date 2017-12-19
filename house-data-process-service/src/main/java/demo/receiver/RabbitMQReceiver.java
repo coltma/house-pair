@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.model.HouseData;
 import demo.model.HouseDataRepository;
-import demo.service.HouseDataService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,14 +16,14 @@ import java.util.concurrent.CountDownLatch;
 @Component
 public class RabbitMQReceiver {
 
-    private HouseDataService houseDataService;
+    private HouseDataRepository houseDataRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    public RabbitMQReceiver(HouseDataService houseDataService) {
-        this.houseDataService = houseDataService;
+    public RabbitMQReceiver(HouseDataRepository houseDataRepository) {
+        this.houseDataRepository = houseDataRepository;
     }
 
     private CountDownLatch latch = new CountDownLatch(1);
@@ -35,7 +34,7 @@ public class RabbitMQReceiver {
         try {
             dataStr = new String(message, "UTF-8");
             HouseData data = this.objectMapper.readValue(dataStr, HouseData.class);
-            this.houseDataService.save(data);
+            this.houseDataRepository.save(data);
             System.out.println(" [x] Received <" + data.getPost_id() +  ">");
             System.out.println(" [x] Received <" + data.getLocation().getType() +  ">");
             System.out.println(" [x] Received <" + data.getLocation().getCoordinates() +  ">");
