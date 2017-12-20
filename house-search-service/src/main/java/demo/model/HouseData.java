@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.geo.Point;
-import org.springframework.data.mongodb.core.geo.GeoJson;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
@@ -19,7 +18,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 @RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
-@Document(collection = "san_francisco")
+@Document(collection = "los_angeles")
 public class HouseData {
 
     @Id
@@ -38,9 +37,6 @@ public class HouseData {
     private String detail_url;
     private String contact_url;
     // geo
-    // private double latitude;
-    // private double longitude;
-    //    GeoJSONPoint location;
     @JsonIgnore
     private final
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
