@@ -19,7 +19,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 @RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
-@Document(collection = "los_angeles")
+@Document(collection = "san_francisco")
 public class HouseData {
 
     @Id

@@ -29,7 +29,7 @@ public class RabbitMQReceiver {
 
     private CountDownLatch latch = new CountDownLatch(1);
 
-    @RabbitListener(queues = "q_los_angeles_county")
+    @RabbitListener(queues = "q_san_francisco_county")
     public void receiveMessage(byte[] message) {
         String dataStr = "{}";
         try {

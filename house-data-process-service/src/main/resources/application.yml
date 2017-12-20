@@ -10,4 +10,4 @@ spring:
     username: guest
     password: guest
   queuenames:
-    losAngeles: q_los_angeles_county
+    losAngeles: q_san_francisco_county

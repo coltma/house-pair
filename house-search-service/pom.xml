@@ -5,7 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.coltma.housepair</groupId>
     <artifactId>house-search-service</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0.BUILD-SNAPSHOT</version>
+    <modules>
+        <module>test</module>
+    </modules>
     <name>house-search-service</name>
     <description>House Search Service: search, get price prediction, subscribe house info.</description>
 
