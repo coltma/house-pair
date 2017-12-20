@@ -24,7 +24,7 @@ public class HousePricePredictionServiceImpl implements HousePricePredictionServ
         final String url = "http://localhost:8000/prediction/";
         String test =  "?br=1.0&ba=1.0&area=700&postal=90007&lat=33.984809&lng=-118.445492";
         log.info(String.format("Calling django REST API"));
-//        PredictedPrice price = this.restTemplate.getForObject(url + test, PredictedPrice.class);
-        return null;
+        PredictedPrice price = this.restTemplate.getForObject(url + test, PredictedPrice.class);
+        return price;
     }
 }
