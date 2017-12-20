@@ -3,13 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.coltma.housepair</groupId>
     <artifactId>house-search-service</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0.BUILD-SNAPSHOT</version>
-    <modules>
-        <module>test</module>
-    </modules>
+
     <name>house-search-service</name>
     <description>House Search Service: search, get price prediction, subscribe house info.</description>
 
@@ -46,7 +44,6 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.6.3</version>
         </dependency>
-
     </dependencies>
 
 
