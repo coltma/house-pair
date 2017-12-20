@@ -11,12 +11,12 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class HousePricePredictionServiceImpl implements HousePricePredictionService {
 
-    private RestTemplate restTemplate;
+//    private RestTemplate restTemplate;
 
-    @Autowired
-    public HousePricePredictionServiceImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+//    @Autowired
+//    public HousePricePredictionServiceImpl(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
 
     // @HystrixCommand(fallbackMethod = "xxx")
     @Override
