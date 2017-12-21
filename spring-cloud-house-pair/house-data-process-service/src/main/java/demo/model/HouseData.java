@@ -26,7 +26,7 @@ public class HouseData {
     @Id
     private String id;
     @JsonProperty("post_id")
-    private long post_id; // craglist_id
+    private long postId; // craglist_id
     private String title;
     private double price;
     private double bedroom;

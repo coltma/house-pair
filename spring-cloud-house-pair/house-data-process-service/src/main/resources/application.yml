@@ -10,4 +10,8 @@ spring:
     username: guest
     password: guest
   queuenames:
-    losAngeles: q_san_francisco_county
+    name: q_san_francisco_county
+  cloud:
+    stream:
+      bindings:
+        output: updated_houses

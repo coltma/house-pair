@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class HouseDataProcessServiceApplication {
 
-    @Value("${spring.queuenames.losAngeles}")
+    @Value("${spring.queuenames.name}")
     private String queueName;
 
     @Bean
