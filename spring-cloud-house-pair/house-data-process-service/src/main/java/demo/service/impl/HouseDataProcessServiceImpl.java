@@ -46,38 +46,21 @@ public class HouseDataProcessServiceImpl implements HouseDataProcessService {
         return null;
     }
 
-    @Override
-    /**
-     * same house: location, houseNumber, bedroom, bathroom, areaSize
-     */
-    public HouseData findSameHouse(HouseData current) {
-        Point point = new Point(current.getLocation().getX(), current.getLocation().getY());
-        HouseData last = mongoOps.findOne(
-                Query.query(Criteria.where("location").nearSphere(point).maxDistance(0).minDistance(0)
-                    .andOperator(
-                        Criteria.where("houseNumber").is(current.getHouseNumber())
-                        .andOperator(
-                            Criteria.where("bedroom").is(current.getBedroom())
-                            .andOperator(
-                                Criteria.where("bathroom").is(current.getBathroom())
-                                .andOperator(
-                                    Criteria.where("areaSize").is(current.getAreaSize())
-                                )
-                            )
-                        )
-                    )), HouseData.class);
-        if (last != null) {
-            log.info(String.format("[HouseDataProcessService] find same house: %f @%s", last.getPrice(), last.getRawAddress()));
-            log.info(String.format("[HouseDataProcessService] to update house: %f @%s", current.getPrice(), current.getRawAddress()));
-        }
-        return last;
-    }
 
     @Override
     public void save(HouseData house) {
-        HouseData tmp = findSameHouse(house);
-        this.repository.save(house);
-        //TODO: log
-//        this.output.send(MessageBuilder.withPayload(house).build());
+        HouseData tmp = this.repository.findSameHouse(house);
+        if (tmp == null) {
+            this.repository.save(house);
+            return;
+        }
+        this.repository.update(tmp, house);
+        log.info(String.format("find duplicate house: [Old]$%f @%s, [New]$%f @%s,",
+                tmp.getPrice(), tmp.getRawAddress(),
+                house.getPrice(), house.getRawAddress()));
+        if (tmp.getPrice() != house.getPrice()) {
+            log.info(String.format("before sending house: $%f @%s", house.getPrice(), house.getRawAddress()));
+            this.output.send(MessageBuilder.withPayload(house).build());
+        }
     }
 }

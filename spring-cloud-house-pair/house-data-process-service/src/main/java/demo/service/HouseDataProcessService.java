@@ -9,7 +9,5 @@ public interface HouseDataProcessService {
      */
     HouseData get();
 
-    HouseData findSameHouse(HouseData house);
-
     void save(HouseData house);
 }
