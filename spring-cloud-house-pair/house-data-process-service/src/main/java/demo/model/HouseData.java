@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+//TODO: alter, change field name to camel; using Date.
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 @RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
@@ -24,19 +25,26 @@ public class HouseData {
 
     @Id
     private String id;
+    @JsonProperty("post_id")
     private long post_id; // craglist_id
     private String title;
     private double price;
     private double bedroom;
     private double bathroom; // 2.5
-    private double area_size;
-    private String raw_address;
+    @JsonProperty("area_size")
+    private double areaSize;
+    @JsonProperty("raw_address")
+    private String rawAddress;
     private List<String> images;
-    private String available_date;
-    private String post_date;
+    @JsonProperty("available_date")
+    private String availableDate;
+    @JsonProperty("post_date")
+    private String postDate;
     private List<String> attributes;
-    private String detail_url;
-    private String contact_url;
+    @JsonProperty("detail_url")
+    private String detailUrl;
+    @JsonProperty("contact_url")
+    private String contactUrl;
     // geo
     // private double latitude;
     // private double longitude;
@@ -49,9 +57,11 @@ public class HouseData {
     private String state;
     private String county;
     private String city;
-    private int postal_code;
+    @JsonProperty("postal_code")
+    private int postalCode;
     private String street;
-    private int house_number;
+    @JsonProperty("house_number")
+    private int houseNumber;
 
     @SuppressWarnings("unused")
     private HouseData() {
@@ -59,7 +69,8 @@ public class HouseData {
     }
 
     @JsonCreator
-    public HouseData(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
+    public HouseData(@JsonProperty("latitude") double latitude,
+                     @JsonProperty("longitude") double longitude) {
         //If specifying latitude and longitude coordinates, list the longitude first and then latitude:
         this.location = new GeoJsonPoint(longitude, latitude);
     }
