@@ -8,9 +8,9 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
 public class PredictedPrice {
-    private String result;
+    private double result;
     @JsonCreator
-    public PredictedPrice(@JsonProperty("result") String result) {
+    public PredictedPrice(@JsonProperty("result") double result) {
         this.result = result;
     }
 }

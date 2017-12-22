@@ -4,5 +4,5 @@ package demo.service;
 import demo.model.PredictedPrice;
 
 public interface HousePricePredictionService {
-    PredictedPrice predict();
+    PredictedPrice predict(double bedroom, double bathroom, double areaSize);
 }

@@ -10,21 +10,15 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @Slf4j
 public class HousePricePredictionServiceImpl implements HousePricePredictionService {
+    private static final String predictUrl = "http://localhost:8000/prediction/";
 
-    private RestTemplate restTemplate;
-
-    @Autowired
-    public HousePricePredictionServiceImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate rawRestTemplate = new RestTemplate();
 
     // @HystrixCommand(fallbackMethod = "xxx")
     @Override
-    public PredictedPrice predict() {
-        final String url = "http://localhost:8000/prediction/";
-        String test =  "?br=1.0&ba=1.0&area=700&postal=90007&lat=33.984809&lng=-118.445492";
+    public PredictedPrice predict(double bedroom, double bathroom, double areaSize) {
+        String params = String.format("?br=%f&ba=%f&area=%f", bedroom, bathroom, areaSize);
         log.info(String.format("Calling django REST API"));
-        PredictedPrice price = this.restTemplate.getForObject(url + test, PredictedPrice.class);
-        return price;
+        return this.rawRestTemplate.getForObject(predictUrl + params, PredictedPrice.class);
     }
 }

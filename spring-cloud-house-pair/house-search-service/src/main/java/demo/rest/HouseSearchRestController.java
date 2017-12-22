@@ -1,17 +1,13 @@
 package demo.rest;
 
 import demo.model.HouseData;
-import demo.model.HouseDataRepository;
+import demo.model.HouseDataDto;
 import demo.model.PredictedPrice;
 import demo.service.HousePricePredictionService;
 import demo.service.HouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Circle;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,23 +20,38 @@ public class HouseSearchRestController {
     private HousePricePredictionService pricePredictionService;
 
     @Autowired
-    public HouseSearchRestController(HouseService houseService, HousePricePredictionService pricePredictionService) {
+    public HouseSearchRestController(HouseService houseService,
+                                     HousePricePredictionService pricePredictionService) {
         this.houseService = houseService;
         this.pricePredictionService = pricePredictionService;
     }
 
-    @RequestMapping(value = "/houses/", method = RequestMethod.GET)
+    @RequestMapping(value = "/houses", method = RequestMethod.GET)
     public List<HouseData> housesWithin(@RequestParam(name = "lat") double lat,
                                         @RequestParam(name = "lng") double lng,
                                         @RequestParam(name = "radius") double radius) {
         return this.houseService.findByLocationWithin(lat, lng, radius);
     }
 
-    @RequestMapping(value = "/predict", method = RequestMethod.GET)
-    public String predict() {
-        PredictedPrice price = this.pricePredictionService.predict();
-        log.info(String.format("Get Price %s", price.getResult()));
-
-        return "ss";
+    @RequestMapping(value = "/house/{id}", method = RequestMethod.GET)
+    public HouseDataDto findHouse(@PathVariable String id) {
+        HouseData house = this.houseService.findById(id);
+        PredictedPrice price = null;
+        if (house != null) {
+            price = this.pricePredictionService.predict(house.getBedroom(),
+                    house.getBathroom(), house.getAreaSize());
+        }
+        double predictPrice = price == null ? 0 : price.getResult();
+        HouseDataDto data = new HouseDataDto(house, predictPrice);
+        return data;
     }
+
+//    @RequestMapping(value = "/prediction", method = RequestMethod.GET)
+//    public String predict() {
+//        PredictedPrice price = this.pricePredictionService.predict();
+//        log.info(String.format("Get Price [%s] from Django.", price.getResult()));
+//
+//        return "ss";
+//    }
+
 }

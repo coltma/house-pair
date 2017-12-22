@@ -17,37 +17,33 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
-@RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
-@Document(collection = "los_angeles")
+@RequiredArgsConstructor
 public class HouseData {
-
-    @Id
     private String id;
-    private long post_id; // craglist_id
+    private long postId; // craglist_id
     private String title;
     private double price;
     private double bedroom;
     private double bathroom; // 2.5
-    private double area_size;
-    private String raw_address;
+    private double areaSize;
+    private String rawAddress;
     private List<String> images;
-    private String available_date;
-    private String post_date;
+    private String availableDate;
+    private String postDate;
     private List<String> attributes;
-    private String detail_url;
-    private String contact_url;
+    private String detailUrl;
+    private String contactUrl;
     // geo
     @JsonIgnore
     private final
-    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     GeoJsonPoint location;
     private String country;
     private String state;
     private String county;
     private String city;
-    private int postal_code;
+    private int postalCode;
     private String street;
-    private int house_number;
+    private int houseNumber;
 
     @SuppressWarnings("unused")
     private HouseData() {

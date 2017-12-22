@@ -10,10 +10,10 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 public class HouseSearchServiceApplication {
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+//    @Bean
+//    public RestTemplate restTemplate() {
+//        return new RestTemplate();
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(HouseSearchServiceApplication.class, args);
