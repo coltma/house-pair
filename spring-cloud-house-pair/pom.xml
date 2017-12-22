@@ -18,6 +18,7 @@
         <module>house-data-process-service</module>
         <module>house-search-service</module>
         <module>house-subscription-service</module>
+        <module>infrastructure-service</module>
     </modules>
 
     <properties>

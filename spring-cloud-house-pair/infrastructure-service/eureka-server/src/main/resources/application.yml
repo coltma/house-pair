@@ -1,5 +1,7 @@
 server:
   port: 8761
+
+
 eureka:
   server:
     wait-time-in-ms-when-syns-empty: 0
