@@ -1,7 +1,7 @@
 package demo.service;
 
 import demo.model.HouseData;
-import demo.model.HouseDataDto;
+import demo.model.SubscriptionRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,5 +13,7 @@ public interface HouseService {
     List<HouseData> findByLocationWithin(double lat, double lng, double radius);
 
     HouseData findById(String id);
+
+    void subscribe(SubscriptionRequest subscription);
 
 }

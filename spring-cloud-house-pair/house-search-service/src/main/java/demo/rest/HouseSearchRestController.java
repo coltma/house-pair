@@ -3,10 +3,12 @@ package demo.rest;
 import demo.model.HouseData;
 import demo.model.HouseDataDto;
 import demo.model.PredictedPrice;
+import demo.model.SubscriptionRequest;
 import demo.service.HousePricePredictionService;
 import demo.service.HouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,12 +48,10 @@ public class HouseSearchRestController {
         return data;
     }
 
-//    @RequestMapping(value = "/prediction", method = RequestMethod.GET)
-//    public String predict() {
-//        PredictedPrice price = this.pricePredictionService.predict();
-//        log.info(String.format("Get Price [%s] from Django.", price.getResult()));
-//
-//        return "ss";
-//    }
+    @RequestMapping(value = "/subscription", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void subscribeHouse(@RequestBody SubscriptionRequest subscriptionRequest) {
+        this.houseService.subscribe(subscriptionRequest);
+    }
 
 }
