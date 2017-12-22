@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 public class HouseData {
-    @Id
     private String id;
     private long postId; // craglist_id
     private String title;

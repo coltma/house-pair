@@ -37,6 +37,8 @@ public class HouseSubscriptionServiceImpl implements HouseSubscriptionService {
 
     @Override
     public void subscribe(Subscription data) {
+        log.info(String.format("Try to subscribe: %s, %s @ %s",
+                data.getEmailAddress(), data.getLocation(), data.getCreatedDate()));
         Subscription last = this.repository.findSameSubscription(data);
         if (last == null) {
             this.repository.save(data);

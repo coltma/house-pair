@@ -18,11 +18,10 @@ public class HouseSubscriptionRestController {
         this.service = service;
     }
 
-    @RequestMapping(name = "/subscription", method = RequestMethod.POST)
+    @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void subscription(@RequestBody Subscription subscription) {
         this.service.subscribe(subscription);
     }
-
 
 }
