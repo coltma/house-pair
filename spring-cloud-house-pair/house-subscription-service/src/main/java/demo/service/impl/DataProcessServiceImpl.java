@@ -29,7 +29,7 @@ public class DataProcessServiceImpl implements DataProcessService {
         if (Double.doubleToRawLongBits(prev) == 0) {
             return "-%";
         }
-        return String.format("%.2f%%", (crt - prev) / prev);
+        return String.format("%.2f%%", (crt - prev) * 100 / prev);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DataProcessServiceImpl implements DataProcessService {
                 house.getCity(),
                 house.getCounty(),
                 house.getState(),
-                house.getCounty(),
+                house.getCountry(),
                 house.getPostalCode())
         );
 

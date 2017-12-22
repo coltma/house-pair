@@ -1,5 +1,6 @@
 package demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.model.HouseData;
 import demo.model.HouseNotification;
@@ -38,7 +39,11 @@ public class HouseSubscriptionSink {
         List<HouseNotification> list = this.notificationService.prepareNotifications(input);
 //        HouseData houseData = this.objectMapper.readValue(input, HouseData.class);
         list.forEach(item -> {
-            this.mqService.produce(item);
+            try {
+                this.mqService.produce(item);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         });
     }
 
