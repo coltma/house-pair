@@ -1,0 +1,8 @@
+server:
+  port: 8761
+eureka:
+  server:
+    wait-time-in-ms-when-syns-empty: 0
+  client:
+    register-with-eureka: false
+    fetch-registry: false
