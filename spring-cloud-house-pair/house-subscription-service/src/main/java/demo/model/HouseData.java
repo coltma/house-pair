@@ -1,57 +1,68 @@
 package demo.model;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.util.List;
 
-@Slf4j
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
-@RequiredArgsConstructor(onConstructor = @__(@PersistenceConstructor))
-@Document(collection = "subscription")
-public class Subscription {
+@RequiredArgsConstructor
+public class HouseData {
     @Id
     private String id;
+    private long postId; // craglist_id
+    private String title;
+    private double price;
+    private double bedroom;
+    private double bathroom; // 2.5
+    private double areaSize;
+    private String rawAddress;
+    private List<String> images;
+    private String availableDate;
+    private String postDate;
+    private List<String> attributes;
+    private String detailUrl;
+    private String contactUrl;
     @JsonIgnore
     private final
-    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     GeoJsonPoint location;
-    private double bedroom;
-    private double bathroom;
-    private double areaSize;
-    private double price;
+    private String country;
+    private String state;
+    private String county;
+    private String city;
+    private int postalCode;
+    private String street;
     private int houseNumber;
-    private String emailAddress;
-
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private Date createdDate;
 
     @SuppressWarnings("unused")
-    private Subscription() {
+    private HouseData() {
         this.location = new GeoJsonPoint(0, 0);
     }
 
     @JsonCreator
-    public Subscription(@JsonProperty("latitude") double latitude, @JsonProperty("longitude") double longitude) {
+    public HouseData(@JsonProperty("latitude") double latitude,
+                     @JsonProperty("longitude") double longitude) {
         //If specifying latitude and longitude coordinates, list the longitude first and then latitude:
         this.location = new GeoJsonPoint(longitude, latitude);
-        log.info(String.format("Subscription location: %s", location));
+    }
+
+    public double getLatitude() {
+        return this.location.getY();
+    }
+
+    public double getLongitude() {
+        return this.location.getX();
     }
 
 }

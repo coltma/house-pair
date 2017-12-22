@@ -8,9 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface HouseSubscriptionRepository extends MongoRepository<Subscription, String> {
+public interface HouseSubscriptionRepository extends MongoRepository<Subscription, String>, HouseSubscriptionRepositoryCustom {
 
     List<Subscription> findByLocationNear(Point location, Distance min, Distance max);
-
 
 }
