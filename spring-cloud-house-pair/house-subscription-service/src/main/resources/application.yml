@@ -1,2 +1,8 @@
 server:
   port: 9003
+  
+spring:
+  cloud:
+    stream:
+      bindings:
+        input: updated_houses
