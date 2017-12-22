@@ -6,6 +6,7 @@ import demo.model.HouseNotification;
 import demo.model.Subscription;
 import demo.service.HouseNotificationService;
 import demo.service.HouseSubscriptionService;
+import demo.service.MQService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -27,12 +28,18 @@ public class HouseSubscriptionSink {
     @Autowired
     private HouseNotificationService notificationService;
 
+    @Autowired
+    private MQService mqService;
+
     @ServiceActivator(inputChannel = Sink.INPUT)
 
     public void consumeUpdatedHouses(HouseData input) throws IOException {
         log.info(String.format("Received Message %d", input.getPostId()));
         List<HouseNotification> list = this.notificationService.prepareNotifications(input);
 //        HouseData houseData = this.objectMapper.readValue(input, HouseData.class);
+        list.forEach(item -> {
+            this.mqService.produce(item);
+        });
     }
 
 }
