@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class HouseSearchRestController {
     }
 
     @RequestMapping(value = "/houses", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:4200")
     public List<HouseData> housesWithin(@RequestParam(name = "lat") double lat,
                                         @RequestParam(name = "lng") double lng,
                                         @RequestParam(name = "radius") double radius) {
@@ -36,6 +38,7 @@ public class HouseSearchRestController {
     }
 
     @RequestMapping(value = "/house/{id}", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:4200")
     public HouseDataDto findHouse(@PathVariable String id) {
         HouseData house = this.houseService.findById(id);
         PredictedPrice price = null;
@@ -50,6 +53,7 @@ public class HouseSearchRestController {
 
     @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin(origins = "http://localhost:4200")
     public void subscribeHouse(@RequestBody SubscriptionRequest subscriptionRequest) {
         this.houseService.subscribe(subscriptionRequest);
     }
