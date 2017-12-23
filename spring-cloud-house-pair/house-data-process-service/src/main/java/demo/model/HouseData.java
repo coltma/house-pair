@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -25,25 +26,25 @@ public class HouseData {
 
     @Id
     private String id;
-    @JsonProperty("post_id")
+    @JsonAlias({"post_id", "postId"})
     private long postId; // craglist_id
     private String title;
     private double price;
     private double bedroom;
     private double bathroom; // 2.5
-    @JsonProperty("area_size")
+    @JsonAlias({"area_size", "areaSize"})
     private double areaSize;
-    @JsonProperty("raw_address")
+    @JsonAlias({"raw_address", "rawAddress"})
     private String rawAddress;
     private List<String> images;
-    @JsonProperty("available_date")
+    @JsonAlias({"available_date", "availableDate"})
     private String availableDate;
-    @JsonProperty("post_date")
+    @JsonAlias({"post_date", "postDate"})
     private String postDate;
     private List<String> attributes;
-    @JsonProperty("detail_url")
+    @JsonAlias({"detail_url", "detailUrl"})
     private String detailUrl;
-    @JsonProperty("contact_url")
+    @JsonAlias({"contact_url", "contactUrl"})
     private String contactUrl;
     // geo
     // private double latitude;
@@ -57,10 +58,10 @@ public class HouseData {
     private String state;
     private String county;
     private String city;
-    @JsonProperty("postal_code")
+    @JsonAlias({"postal_code", ""})
     private int postalCode;
     private String street;
-    @JsonProperty("house_number")
+    @JsonAlias({"house_number", ""})
     private int houseNumber;
 
     @SuppressWarnings("unused")
