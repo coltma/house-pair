@@ -3,11 +3,14 @@ package demo.receiver;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import demo.model.HouseData;
 import demo.model.HouseDataRepository;
 import demo.service.HouseDataProcessService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,6 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CountDownLatch;
 
 @Component
+@Slf4j
+@EnableCircuitBreaker
 public class RabbitMQReceiver {
 
     private HouseDataProcessService service;
@@ -29,6 +34,7 @@ public class RabbitMQReceiver {
 
     private CountDownLatch latch = new CountDownLatch(1);
 
+    @HystrixCommand(fallbackMethod = "consumeHouseDataFallBack")
     @RabbitListener(queues = "q_san_francisco_county")
     public void receiveMessage(byte[] message) {
         String dataStr = "{}";
@@ -49,6 +55,10 @@ public class RabbitMQReceiver {
             e.printStackTrace();
         }
         latch.getCount();
+    }
+
+    public void consumeHouseDataFallBack(byte[] message) {
+        log.error("Hystrix Fallback Method. Unable to receive message for crawler service.");
     }
 
     public CountDownLatch getLatch() {
