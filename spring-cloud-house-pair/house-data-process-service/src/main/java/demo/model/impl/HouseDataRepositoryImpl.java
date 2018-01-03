@@ -1,16 +1,12 @@
 package demo.model.impl;
 
-import com.mongodb.WriteResult;
 import demo.model.HouseData;
-import demo.model.HouseDataRepository;
 import demo.model.HouseDataRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Repository;
 
 public class HouseDataRepositoryImpl implements HouseDataRepositoryCustom {
 
