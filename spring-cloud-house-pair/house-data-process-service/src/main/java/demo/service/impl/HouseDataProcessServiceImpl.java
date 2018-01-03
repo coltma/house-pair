@@ -48,7 +48,13 @@ public class HouseDataProcessServiceImpl implements HouseDataProcessService {
 
     @Override
     public HouseData findById(String id) {
-        return this.repository.findById(id);
+        HouseData data =  this.repository.findById(id);
+        if (data != null) {
+            log.info(String.format("Get %s data with id:%s.", id, data.getId()));
+        } else {
+            log.info(String.format("No %s data found.", id));
+        }
+        return data;
     }
 
     @Override

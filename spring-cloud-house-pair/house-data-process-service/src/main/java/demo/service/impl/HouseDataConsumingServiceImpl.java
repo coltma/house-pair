@@ -1,34 +1,34 @@
-package demo.receiver;
+package demo.service.impl;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import demo.model.HouseData;
-import demo.model.HouseDataRepository;
+import demo.service.HouseDataConsumingService;
 import demo.service.HouseDataProcessService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CountDownLatch;
 
-@Component
+@Service
 @Slf4j
 @EnableCircuitBreaker
-public class RabbitMQReceiver {
-
+public class HouseDataConsumingServiceImpl implements HouseDataConsumingService {
     private HouseDataProcessService service;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
-    public RabbitMQReceiver(HouseDataProcessService service) {
+    public HouseDataConsumingServiceImpl(HouseDataProcessService service) {
         this.service = service;
     }
 
@@ -36,7 +36,8 @@ public class RabbitMQReceiver {
 
     @HystrixCommand(fallbackMethod = "consumeHouseDataFallBack")
     @RabbitListener(queues = "q_san_francisco_county")
-    public void receiveMessage(byte[] message) {
+    @Override
+    public void consumeMessage(byte[] message) {
         String dataStr = "{}";
         try {
             dataStr = new String(message, "UTF-8");
