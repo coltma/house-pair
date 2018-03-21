@@ -7,6 +7,11 @@ HousePair helps you find a match home for you!
 This project aims to help users to find a matched rental house. After crawling house ads from from websites (or social media apps and other data resource in the future work), it processes those data and visualize them on Google Map. Furthermore, based on historical rental house price and Machine Learning, it could predict the price for new posted ads which used as a reference for user to make a reasonable choice. If user is interested in a particular house and once the house price changed, the system would notify the user.
 
 <img width="1123" alt="demo" src="https://user-images.githubusercontent.com/25625245/37695359-ec3147ee-2c8b-11e8-8540-a816fd94eaa0.png">
+Demo
+
+
+<img width="1265" alt="services" src="https://user-images.githubusercontent.com/25625245/37695641-0007183c-2c8e-11e8-9250-f782a2f4b8bf.png">
+Services
 
 ## 2. Main Use Cases
 ###### 1. House Searching:
